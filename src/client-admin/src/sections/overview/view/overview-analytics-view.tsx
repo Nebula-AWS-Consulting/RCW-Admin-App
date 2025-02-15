@@ -13,6 +13,7 @@ import { AnalyticsWidgetSummary } from '../analytics-widget-summary';
 import { AnalyticsTrafficBySite } from '../analytics-traffic-by-site';
 import { AnalyticsCurrentSubject } from '../analytics-current-subject';
 import { AnalyticsConversionRates } from '../analytics-conversion-rates';
+import { AnalyticsTransactionForm } from '../analytics-transaction-form';
 
 // ----------------------------------------------------------------------
 
@@ -137,6 +138,10 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} md={6} lg={8}>
           <AnalyticsNews title="News" list={_posts.slice(0, 5)} />
+        </Grid>
+        
+        <Grid xs={12} md={6} lg={8}>
+          <AnalyticsTransactionForm />
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
