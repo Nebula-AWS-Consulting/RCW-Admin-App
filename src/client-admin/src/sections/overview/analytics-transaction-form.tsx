@@ -1,69 +1,101 @@
 import Box from '@mui/material/Box';
-
-import { Iconify } from 'src/components/iconify';
-
-import { Card, IconButton, InputAdornment, Link, TextField, Typography } from '@mui/material';
+import { Card, TextField, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { useState } from 'react';
 
 export function AnalyticsTransactionForm() {
-    const [showPassword, setShowPassword] = useState(false);
-  
-    const renderForm = (
-      <Box display="flex" flexDirection="column" alignItems="flex-end">
-        <TextField
-          fullWidth
-          name="email"
-          label="Email address"
-          defaultValue="hello@gmail.com"
-          InputLabelProps={{ shrink: true }}
-          sx={{ mb: 3 }}
-        />
-  
-        <Link variant="body2" color="inherit" sx={{ mb: 1.5 }}>
-          Forgot password?
-        </Link>
-  
-        <TextField
-          fullWidth
-          name="password"
-          label="Password"
-          defaultValue="@demo1234"
-          InputLabelProps={{ shrink: true }}
-          type={showPassword ? 'text' : 'password'}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-          sx={{ mb: 3 }}
-        />
-  
-        <LoadingButton
-          fullWidth
-          size="large"
-          type="submit"
-          color="inherit"
-          variant="contained"
-        >
-          Sign in
-        </LoadingButton>
+  const renderForm = (
+    <Box component="form" display="flex" flexDirection="column" alignItems="flex-end" noValidate>
+      <TextField
+        fullWidth
+        name="id"
+        label="ID"
+        InputLabelProps={{ shrink: true }}
+        sx={{ mb: 3 }}
+      />
+      <TextField
+        fullWidth
+        name="data_type"
+        label="Data Type"
+        InputLabelProps={{ shrink: true }}
+        sx={{ mb: 3 }}
+      />
+      <TextField
+        fullWidth
+        name="currency"
+        label="Currency"
+        InputLabelProps={{ shrink: true }}
+        sx={{ mb: 3 }}
+      />
+      <TextField
+        fullWidth
+        name="amount_value"
+        label="Amount Value"
+        InputLabelProps={{ shrink: true }}
+        sx={{ mb: 3 }}
+      />
+      <TextField
+        fullWidth
+        name="create_time"
+        label="Create Time"
+        InputLabelProps={{ shrink: true }}
+        sx={{ mb: 3 }}
+      />
+      <TextField
+        fullWidth
+        name="net_amount"
+        label="Net Amount"
+        InputLabelProps={{ shrink: true }}
+        sx={{ mb: 3 }}
+      />
+      <TextField
+        fullWidth
+        name="purpose"
+        label="Purpose"
+        InputLabelProps={{ shrink: true }}
+        sx={{ mb: 3 }}
+      />
+      <TextField
+        fullWidth
+        name="transaction_fee"
+        label="Transaction Fee"
+        InputLabelProps={{ shrink: true }}
+        sx={{ mb: 3 }}
+      />
+      <TextField
+        fullWidth
+        name="user_email"
+        label="User Email"
+        InputLabelProps={{ shrink: true }}
+        sx={{ mb: 3 }}
+      />
+      <TextField
+        fullWidth
+        name="user_name"
+        label="User Name"
+        InputLabelProps={{ shrink: true }}
+        sx={{ mb: 3 }}
+      />
+      <LoadingButton
+        fullWidth
+        size="large"
+        type="submit"
+        color="inherit"
+        variant="contained"
+      >
+        Submit Transaction
+      </LoadingButton>
+    </Box>
+  );
+
+  return (
+    <Card sx={{ padding: 4 }}>
+      <Box gap={1.5} display="flex" flexDirection="column" alignItems="center" sx={{ mb: 3 }}>
+        <Typography variant="h5">Church Transaction Form</Typography>
       </Box>
-    );
-  
-    return (
-      <Card sx={{
-        padding: 4
-      }}>
-        <Box gap={1.5} display="flex" flexDirection="column" alignItems="center" sx={{ mb: 3 }}>
-          <Typography variant="h5">Church Transaction Form</Typography>
-        </Box>
-  
-        {renderForm}
-      </Card>
-    );
+      {renderForm}
+    </Card>
+  );
 }
+
+// Form Fields
+// id, data_type, currency, amount_value, create_time, net_amount, purpose, transaction_fee, user_email, user_name
