@@ -1,12 +1,10 @@
+from datetime import datetime
+import random
+import string
 import boto3
 import json
 import os
 import logging
-
-# Lambda handler
-
-## Be used in an API. Will take body and break it apart into variables to upload as an item in DynamoDB
-## Add Get method that will handle querying the db data to visualize
 
 # Set up basic logging
 logger = logging.getLogger()
@@ -45,7 +43,17 @@ def handle_post(event):
         # Parse the request body
         body = json.loads(event.get("body", "{}"))
 
-        item_id = ''
+        def generate_transaction_id():
+            """
+            Generates a random transaction ID similar to a PayPal transaction ID.
+            Format: C-XXXXXXXXXXXX, where:
+            - XXXXXXXXXXXX is a 12-character string of random uppercase letters and digits.
+            """
+            prefix = "C"
+            body = ''.join(random.choices(string.ascii_uppercase + string.digits, k=12))
+            return f"{prefix}-{body}"
+
+        item_id = generate_transaction_id()
 
         # Extract variables from the body. Adjust field names as needed.
         # For example, assume your item has id, user_name, amount_value, purpose, currency, etc.
@@ -54,9 +62,9 @@ def handle_post(event):
             "user_name": body["user_name"],
             "amount_value": body["amount_value"],
             "purpose": body["purpose"],
-            "currency": body["currency"],
+            "amount_currency": body["currency"],
             "data_type": "Cash Payment",
-            "create_time": body["create_time"]
+            "create_time": datetime.utcnow().isoformat() + "Z"
         }
         
         # Put the item into the DynamoDB table.
@@ -116,4 +124,3 @@ def handle_get(event): # Build off of it to use the items and use in a different
                 "error": str(e)
             })
         }
-

@@ -52,7 +52,7 @@ export function AnalyticsTransactionForm() {
     console.log(transactionData);
     
     try {
-        const response = await fetch('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', {
+        const response = await fetch('https://cto3b5zoi7.execute-api.us-west-1.amazonaws.com/Prod/upload-item', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
