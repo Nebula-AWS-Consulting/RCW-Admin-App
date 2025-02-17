@@ -5,45 +5,17 @@ import { LoadingButton } from '@mui/lab';
 export function AnalyticsTransactionForm() {
   const renderForm = (
     <Box component="form" display="flex" flexDirection="column" alignItems="flex-end" noValidate>
-      <TextField
-        fullWidth
-        name="id"
-        label="ID"
-        InputLabelProps={{ shrink: true }}
-        sx={{ mb: 3 }}
-      />
-      <TextField
-        fullWidth
-        name="data_type"
-        label="Data Type"
-        InputLabelProps={{ shrink: true }}
-        sx={{ mb: 3 }}
-      />
-      <TextField
-        fullWidth
-        name="currency"
-        label="Currency"
-        InputLabelProps={{ shrink: true }}
-        sx={{ mb: 3 }}
-      />
+        <TextField
+          fullWidth
+          name="user_name"
+          label="User Name"
+          InputLabelProps={{ shrink: true }}
+          sx={{ mb: 3 }}
+        />
       <TextField
         fullWidth
         name="amount_value"
         label="Amount Value"
-        InputLabelProps={{ shrink: true }}
-        sx={{ mb: 3 }}
-      />
-      <TextField
-        fullWidth
-        name="create_time"
-        label="Create Time"
-        InputLabelProps={{ shrink: true }}
-        sx={{ mb: 3 }}
-      />
-      <TextField
-        fullWidth
-        name="net_amount"
-        label="Net Amount"
         InputLabelProps={{ shrink: true }}
         sx={{ mb: 3 }}
       />
@@ -56,22 +28,8 @@ export function AnalyticsTransactionForm() {
       />
       <TextField
         fullWidth
-        name="transaction_fee"
-        label="Transaction Fee"
-        InputLabelProps={{ shrink: true }}
-        sx={{ mb: 3 }}
-      />
-      <TextField
-        fullWidth
-        name="user_email"
-        label="User Email"
-        InputLabelProps={{ shrink: true }}
-        sx={{ mb: 3 }}
-      />
-      <TextField
-        fullWidth
-        name="user_name"
-        label="User Name"
+        name="currency"
+        label="Currency"
         InputLabelProps={{ shrink: true }}
         sx={{ mb: 3 }}
       />
