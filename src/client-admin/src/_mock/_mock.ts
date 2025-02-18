@@ -177,30 +177,11 @@ export const _description = (index: number) =>
 
 export const _taskNames = (index: number) =>
   [
-    `Prepare Monthly Financial Report`,
-    `Design New Marketing Campaign`,
-    `Analyze Customer Feedback`,
-    `Update Website Content`,
-    `Conduct Market Research`,
-    `Develop Software Application`,
-    `Organize Team Meeting`,
-    `Create Social Media Posts`,
-    `Review Project Plan`,
-    `Implement Security Protocols`,
-    `Write Technical Documentation`,
-    `Test New Product Features`,
-    `Manage Client Inquiries`,
-    `Train New Employees`,
-    `Coordinate Logistics`,
-    `Monitor Network Performance`,
-    `Develop Training Materials`,
-    `Draft Press Release`,
-    `Prepare Budget Proposal`,
-    `Evaluate Vendor Proposals`,
-    `Perform Data Analysis`,
-    `Conduct Quality Assurance`,
-    `Plan Event Logistics`,
-    `Optimize SEO Strategies`,
+    `Grow to 150 Disciples`,
+    `Appoint Two Evangalists & Womans Ministry Leaders`,
+    `Get revenue to 6,000 a week`,
+    `Hire two full time campus interns`,
+    `Seperate into two regions`
   ][index];
 
 export const _productNames = (index: number) =>

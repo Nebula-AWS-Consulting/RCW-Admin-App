@@ -27,68 +27,69 @@ export function OverviewAnalyticsView() {
       <Grid container spacing={3}>
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="Weekly sales"
+            title="Weekly Bible Studies"
             percent={2.6}
-            total={714000}
+            total={102}
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-bag.svg" />}
             chart={{
               categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-              series: [22, 8, 35, 50, 82, 84, 77, 12],
+              series: [80, 87, 79, 68, 72, 84, 77, 92],
             }}
           />
         </Grid>
 
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="New users"
-            percent={-0.1}
-            total={1352831}
+            title="New Baptisms"
+            percent={-20}
+            total={6}
             color="secondary"
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-users.svg" />}
             chart={{
               categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-              series: [56, 47, 40, 62, 73, 30, 23, 54],
+              series: [5, 4, 4, 6, 3, 3, 5, 7],
             }}
           />
         </Grid>
 
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="Purchase orders"
-            percent={2.8}
-            total={1723315}
+            title="Church Income"
+            percent={-15.8}
+            total={172331}
             color="warning"
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-buy.svg" />}
             chart={{
               categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-              series: [40, 70, 50, 28, 70, 75, 7, 64],
+              series: [20000, 20700, 25000, 28000, 27000, 25000, 27000, 24000],
             }}
           />
         </Grid>
 
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="Messages"
-            percent={3.6}
-            total={234}
+            title="Overall Church Growth"
+            percent={32.6}
+            total={42}
             color="error"
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-message.svg" />}
             chart={{
               categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-              series: [56, 30, 23, 54, 47, 40, 62, 73],
+              series: [7, 3, 12, 5, 7, 4, 2, 7],
             }}
           />
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
           <AnalyticsCurrentVisits
-            title="Current visits"
+            title="Weekly Bible Studies"
             chart={{
               series: [
-                { label: 'America', value: 3500 },
-                { label: 'Asia', value: 2500 },
-                { label: 'Europe', value: 1500 },
-                { label: 'Africa', value: 500 },
+                { label: 'Campus', value: 60 },
+                { label: 'Singles', value: 25 },
+                { label: 'Marrieds', value: 15 },
+                { label: 'Teens', value: 5 },
+                { label: 'Spanish', value: 5 }
               ],
             }}
           />
@@ -96,13 +97,16 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} md={6} lg={8}>
           <AnalyticsWebsiteVisits
-            title="Website visits"
+            title="Bible Studies that Lead to succession"
             subheader="(+43%) than last year"
             chart={{
-              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+              categories: ['Seeking God', 'Word of God', 'Discipleship', 'Persecution', 'Kingdom', 'Light & Darkness', 'Confession & Repentance', 'The Church', 'Counting the Cost'],
               series: [
-                { name: 'Team A', data: [43, 33, 22, 37, 67, 68, 37, 24, 55] },
-                { name: 'Team B', data: [51, 70, 47, 67, 40, 37, 24, 70, 24] },
+                { name: 'Campus', data: [43, 33, 22, 37, 67, 68, 37, 24, 55] },
+                { name: 'Singles', data: [51, 70, 47, 67, 40, 37, 24, 70, 24] },
+                { name: 'Marrieds', data: [51, 70, 47, 67, 40, 37, 24, 70, 24] },
+                { name: 'Teens', data: [51, 70, 47, 67, 40, 37, 24, 70, 24] },
+                { name: 'Spanish', data: [51, 70, 47, 67, 40, 37, 24, 70, 24] }
               ],
             }}
           />
@@ -113,10 +117,10 @@ export function OverviewAnalyticsView() {
             title="Conversion rates"
             subheader="(+43%) than last year"
             chart={{
-              categories: ['Italy', 'Japan', 'China', 'Canada', 'France'],
+              categories: ['Campus', 'Singles', 'Marrieds', 'Teens', 'Spanish'],
               series: [
-                { name: '2022', data: [44, 55, 41, 64, 22] },
-                { name: '2023', data: [53, 32, 33, 52, 13] },
+                { name: '2024', data: [2440, 2505, 2410, 2640, 2209] },
+                { name: '2025', data: [53, 32, 33, 52, 33] },
               ],
             }}
           />
@@ -124,13 +128,13 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} md={6} lg={4}>
           <AnalyticsCurrentSubject
-            title="Current subject"
+            title="Bible Talk Bible studies"
             chart={{
-              categories: ['English', 'History', 'Physics', 'Geography', 'Chinese', 'Math'],
+              categories: ['SG', 'WoG', 'Discipleship', 'Persecution', 'Kingdom', 'L & D'],
               series: [
-                { name: 'Series 1', data: [80, 50, 30, 40, 100, 20] },
-                { name: 'Series 2', data: [20, 30, 40, 80, 20, 80] },
-                { name: 'Series 3', data: [44, 76, 78, 13, 43, 10] },
+                { name: 'BT 1', data: [80, 50, 30, 40, 100, 20] },
+                { name: 'BT 2', data: [20, 30, 40, 80, 20, 80] },
+                { name: 'BT 4', data: [44, 76, 78, 13, 43, 10] },
               ],
             }}
           />
@@ -139,13 +143,13 @@ export function OverviewAnalyticsView() {
         <Grid xs={12} md={6} lg={8}>
           <AnalyticsNews title="News" list={_posts.slice(0, 5)} />
         </Grid>
-        
+
         <Grid xs={12} md={6} lg={8}>
           <AnalyticsTransactionForm />
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
-          <AnalyticsOrderTimeline title="Order timeline" list={_timeline} />
+          <AnalyticsOrderTimeline title="Growth Timeline" list={_timeline} />
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
@@ -155,13 +159,13 @@ export function OverviewAnalyticsView() {
               { value: 'facebook', label: 'Facebook', total: 323234 },
               { value: 'google', label: 'Google', total: 341212 },
               { value: 'linkedin', label: 'Linkedin', total: 411213 },
-              { value: 'twitter', label: 'Twitter', total: 443232 },
+              { value: 'twitter', label: 'Twitter', total: 443232 }
             ]}
           />
         </Grid>
 
         <Grid xs={12} md={6} lg={8}>
-          <AnalyticsTasks title="Tasks" list={_tasks} />
+          <AnalyticsTasks title="Goals" list={_tasks} />
         </Grid>
       </Grid>
     </DashboardContent>
