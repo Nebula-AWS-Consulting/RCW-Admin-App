@@ -1,7 +1,5 @@
-import Box from '@mui/material/Box';
-import { Card, TextField, Typography } from '@mui/material';
-import { LoadingButton } from '@mui/lab';;
-import MenuItem from '@mui/material/MenuItem';
+import { Card, TextField, Typography, MenuItem, Box } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 
 export function AnalyticsTransactionForm() {
 

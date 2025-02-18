@@ -2,7 +2,6 @@ import {
   _id,
   _price,
   _times,
-  _company,
   _boolean,
   _fullName,
   _taskNames,
@@ -24,23 +23,20 @@ export const _myAccount = {
 export const _users = [...Array(24)].map((_, index) => ({
   id: _id(index),
   name: _fullName(index),
-  company: _company(index),
   isVerified: _boolean(index),
   avatarUrl: `/assets/images/avatar/avatar-${index + 1}.webp`,
   status: index % 4 ? 'active' : 'banned',
   role:
     [
-      'Leader',
-      'Hr Manager',
-      'UI Designer',
-      'UX Designer',
-      'UI/UX Designer',
-      'Project Manager',
-      'Backend Developer',
-      'Full Stack Designer',
-      'Front End Developer',
-      'Full Stack Developer',
-    ][index] || 'UI Designer',
+      'Evangalist',
+      'Admin',
+      'Bible Talk Leader',
+      'Singles Ministry Leader',
+      'Campus Ministry Leader',
+      'Marrieds Ministry Leader',
+      'Teens Ministry Leader',
+      'Spanish Ministry Leader'
+    ][index]
 }));
 
 // ----------------------------------------------------------------------
@@ -121,11 +117,11 @@ export const _langs = [
 export const _timeline = [...Array(5)].map((_, index) => ({
   id: _id(index),
   title: [
-    '1983, orders, $4220',
-    '12 Invoices have been paid',
-    'Order #37745 from September',
-    'New order placed #XF-2356',
-    'New order placed #XF-2346',
+    'Reached 100 Disciples',
+    'New Intern Hired',
+    'Spanish Ministry Created',
+    'Regionalized the Church',
+    'Reached 150 Disciples',
   ][index],
   type: `order${index + 1}`,
   time: _times(index),
