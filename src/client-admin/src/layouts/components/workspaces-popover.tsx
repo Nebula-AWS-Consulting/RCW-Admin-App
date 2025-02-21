@@ -10,7 +10,6 @@ import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 
 import { varAlpha } from 'src/theme/styles';
 
-import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
@@ -46,10 +45,6 @@ export function WorkspacesPopover({ data = [], sx, ...other }: WorkspacesPopover
 
   const renderAvatar = (alt: string, src: string) => (
     <Box component="img" alt={alt} src={src} sx={{ width: 24, height: 24, borderRadius: '50%' }} />
-  );
-
-  const renderLabel = (plan: string) => (
-    <Label color={plan === 'Free' ? 'default' : 'info'}>{plan}</Label>
   );
 
   return (
