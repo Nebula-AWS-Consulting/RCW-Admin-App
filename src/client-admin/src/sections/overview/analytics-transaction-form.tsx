@@ -1,6 +1,7 @@
-import { Card, TextField, Typography, MenuItem, Box } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
 import { useState } from 'react';
+
+import { LoadingButton } from '@mui/lab';
+import { Box, Card, MenuItem, TextField, Typography } from '@mui/material';
 
 export function AnalyticsTransactionForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +40,7 @@ export function AnalyticsTransactionForm() {
     
     // Convert the amount to a number and ensure it's positive.
     const amountValue = parseFloat(amountStr);
-    if (isNaN(amountValue) || amountValue <= 0) {
+    if (Number.isNaN(amountValue) || amountValue <= 0) {
         console.error("Amount must be a positive number.");
         return;
     }
