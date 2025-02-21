@@ -1,10 +1,14 @@
 import { Card, TextField, Typography, MenuItem, Box } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { useState } from 'react';
 
 export function AnalyticsTransactionForm() {
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsLoading(true);
+
     const data = new FormData(event.currentTarget);
     
     // Extract and trim the user_name and amount_value fields.
@@ -47,26 +51,28 @@ export function AnalyticsTransactionForm() {
         currency: data.get('currency'),
     };
     
-    console.log(transactionData);
-    
     try {
-        const response = await fetch('https://cto3b5zoi7.execute-api.us-west-1.amazonaws.com/Prod/upload-item', {
+      const response = await fetch('https://cto3b5zoi7.execute-api.us-west-1.amazonaws.com/Prod/upload-item', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(transactionData),
-        });
-    
-        if (response.ok) {
+      });
+      
+      if (response.ok) {
         console.log('Transaction submitted successfully');
-        } else {
+      } else {
         console.error('Failed to submit transaction');
         }
     } catch (error) {
         console.error('Error submitting transaction:', error);
     }
-    };
+    finally {
+        (event.target as HTMLFormElement).reset();
+        setIsLoading(false);
+    }
+  };
   
   const renderForm = (
     <Box component="form" display="flex" flexDirection="column" alignItems="flex-end" onSubmit={handleSubmit} noValidate>
@@ -121,6 +127,7 @@ export function AnalyticsTransactionForm() {
         type="submit"
         color="inherit"
         variant="contained"
+        loading={isLoading}
       >
         Submit Transaction
       </LoadingButton>
@@ -137,6 +144,3 @@ export function AnalyticsTransactionForm() {
     </Card>
   );
 }
-
-// Form Fields
-// id, data_type, currency, amount_value, create_time, net_amount, purpose, transaction_fee, user_email, user_name
