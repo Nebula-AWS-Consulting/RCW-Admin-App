@@ -12,7 +12,6 @@ export default function Page() {
       <Helmet>
         <title> {`Users - ${CONFIG.appName}`}</title>
       </Helmet>
-
       <UserView />
     </>
   );
