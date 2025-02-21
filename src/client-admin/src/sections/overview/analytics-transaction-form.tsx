@@ -46,7 +46,7 @@ export function AnalyticsTransactionForm() {
     
     const transactionData = {
         user_name: userName,
-        amount_value: amountValue, // Use the validated numeric value
+        amount_value: Number(amountValue).toFixed(2), // Use the validated numeric value
         purpose: data.get('purpose'),
         currency: data.get('currency'),
     };

@@ -63,7 +63,7 @@ def handle_post(event):
             "amount_value": body["amount_value"],
             "purpose": body["purpose"],
             "amount_currency": body["currency"],
-            "data_type": "Cash Payment",
+            "data_type": "cash payment",
             "create_time": datetime.utcnow().isoformat() + "Z"
         }
         
