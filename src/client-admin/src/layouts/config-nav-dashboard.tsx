@@ -28,6 +28,11 @@ export const navData = [
     icon: icon('ic-lock'),
   },
   {
+    title: 'Sign up',
+    path: '/sign-up',
+    icon: icon('ic-lock'),
+  },
+  {
     title: 'Not found',
     path: '/404',
     icon: icon('ic-disabled'),

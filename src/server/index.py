@@ -10,24 +10,49 @@ import logging
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-# Initialize DynamoDB resource and table
-dynamodb = boto3.resource('dynamodb')
+
 TABLE_NAME = os.environ.get("TABLE_NAME")
+
+dynamodb = boto3.resource('dynamodb')
+cognito_client = boto3.client('cognito-idp')
+ssm = boto3.client('ssm')
 table = dynamodb.Table(TABLE_NAME)
+
+def get_ssm_parameter(name: str) -> str:
+    """Fetch a parameter from AWS SSM Parameter Store with decryption enabled."""
+    response = ssm.get_parameter(Name=name, WithDecryption=True)
+    return response['Parameter']['Value']
+
+def get_environment() -> str:
+    """Retrieve the deployment environment, defaulting to 'dev' if not set."""
+    return os.environ.get("ENVIRONMENT", "dev")
+
+def get_user_pool_client_id() -> str:
+    """Retrieve Cognito User Pool Client ID from SSM."""
+    return get_ssm_parameter(f"/rcw-client-backend-{get_environment()}/COGNITO_CLIENT_ID")
+
 
 def lambda_handler(event, context):
     """
     Lambda handler to support API operations:
-      - POST: Accepts a JSON body, parses it into variables, and uploads an item to DynamoDB.
-      - GET: Retrieves items from DynamoDB for visualization.
+      - POST: for sign-up, sign-in, or cash transaction upload
+      - GET: to retrieve items from DynamoDB
+    Assumes that API Gateway provides a 'path' in the event to differentiate endpoints.
     """
     logger.info("Received event: %s", json.dumps(event))
-
     http_method = event.get("httpMethod")
+    path = event.get("path", "")
+    
     if http_method == "POST":
-        return handle_post(event)
+        if path == "/signup":
+            return sign_up(event)
+        elif path == "/signin":
+            return sign_in(event)
+        elif path == "/upload-cash-transaction":
+            return upload_cash_transaction(event)
     elif http_method == "GET":
-        return handle_get(event)
+        if path == "/get-db-items":
+            return get_db_items(event)
     else:
         return {
             "statusCode": 405,
@@ -35,7 +60,78 @@ def lambda_handler(event, context):
             "body": json.dumps({"message": "Method Not Allowed"})
         }
 
-def handle_post(event):
+def sign_up(event):
+    """
+    Sign up a new user using Cognito.
+    Expects JSON in the request body with keys:
+      - username
+      - password
+      - email
+    """
+    try:
+        body = json.loads(event['body'])
+        username = body.get('username')
+        password = body.get('password')
+        email = body.get('email')
+        
+        # Call Cognito's sign_up API
+        response = cognito_client.sign_up(
+            ClientId=get_user_pool_client_id(),
+            Username=username,
+            Password=password,
+            UserAttributes=[
+                {'Name': 'email', 'Value': email}
+            ]
+        )
+        return {
+            "statusCode": 200,
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps(response)
+        }
+    except Exception as e:
+        logger.error("Error during sign up: %s", str(e))
+        return {
+            "statusCode": 400,
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps({"error": str(e)})
+        }
+
+def sign_in(event):
+    """
+    Sign in an existing user using Cognito.
+    Expects JSON in the request body with keys:
+      - username
+      - password
+    """
+    try:
+        body = json.loads(event['body'])
+        username = body.get('username')
+        password = body.get('password')
+        
+        # Call Cognito's initiate_auth API with the USER_PASSWORD_AUTH flow
+        response = cognito_client.initiate_auth(
+            ClientId=get_user_pool_client_id(),
+            AuthFlow='USER_PASSWORD_AUTH',
+            AuthParameters={
+                'USERNAME': username,
+                'PASSWORD': password
+            }
+        )
+        # The AuthenticationResult contains tokens (ID, access, refresh tokens)
+        return {
+            "statusCode": 200,
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps(response['AuthenticationResult'])
+        }
+    except Exception as e:
+        logger.error("Error during sign in: %s", str(e))
+        return {
+            "statusCode": 400,
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps({"error": str(e)})
+        }
+
+def upload_cash_transaction(event):
     """
     Handle POST requests: parse the incoming JSON body, extract variables, and upload the item to DynamoDB.
     """
@@ -93,7 +189,7 @@ def handle_post(event):
             })
         }
 
-def handle_get(event): # Build off of it to use the items and use in a different function to create some sort of analytics
+def get_db_items(event): # Build off of it to use the items and use in a different function to create some sort of analytics
     """
     Handle GET requests: query or scan the DynamoDB table to retrieve data.
     """
