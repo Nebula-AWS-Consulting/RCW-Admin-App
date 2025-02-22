@@ -24,12 +24,12 @@ export const navData = [
   },
   {
     title: 'Sign in',
-    path: '/sign-in',
+    path: '/auth/sign-in',
     icon: icon('ic-lock'),
   },
   {
     title: 'Sign up',
-    path: '/sign-up',
+    path: '/auth/sign-up',
     icon: icon('ic-lock'),
   },
   {

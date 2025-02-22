@@ -70,29 +70,39 @@ def sign_up(event):
     """
     try:
         body = json.loads(event['body'])
-        username = body.get('username')
+        first_name = body.get('firstName')
+        last_name = body.get('lastName')
         password = body.get('password')
         email = body.get('email')
         
         # Call Cognito's sign_up API
         response = cognito_client.sign_up(
             ClientId=get_user_pool_client_id(),
-            Username=username,
+            Username=email,
             Password=password,
             UserAttributes=[
-                {'Name': 'email', 'Value': email}
+                {'Name': 'email', 'Value': email},
+                {'Name': 'custom:firstName', 'Value': first_name},
+                {'Name': 'custom:lastName', 'Value': last_name}
             ]
         )
         return {
             "statusCode": 200,
-            "headers": {"Content-Type": "application/json"},
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": "true"
+            },
             "body": json.dumps(response)
         }
     except Exception as e:
-        logger.error("Error during sign up: %s", str(e))
+        logger.error("Error during sign in: %s", str(e))
         return {
             "statusCode": 400,
-            "headers": {"Content-Type": "application/json"},
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            },
             "body": json.dumps({"error": str(e)})
         }
 
@@ -120,16 +130,24 @@ def sign_in(event):
         # The AuthenticationResult contains tokens (ID, access, refresh tokens)
         return {
             "statusCode": 200,
-            "headers": {"Content-Type": "application/json"},
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",  # or specify your origin, e.g., "http://localhost:3039"
+                "Access-Control-Allow-Credentials": "true"
+            },
             "body": json.dumps(response['AuthenticationResult'])
         }
     except Exception as e:
         logger.error("Error during sign in: %s", str(e))
         return {
             "statusCode": 400,
-            "headers": {"Content-Type": "application/json"},
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            },
             "body": json.dumps({"error": str(e)})
         }
+
 
 def upload_cash_transaction(event):
     """

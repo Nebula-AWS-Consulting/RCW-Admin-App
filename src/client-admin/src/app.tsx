@@ -7,7 +7,8 @@ import { useScrollToTop } from 'src/hooks/use-scroll-to-top';
 import { ThemeProvider } from 'src/theme/theme-provider';
 
 import { Provider } from 'react-redux';
-import { store } from './store';
+import { persistor, store } from './store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 // ----------------------------------------------------------------------
 
@@ -17,7 +18,9 @@ export default function App() {
   return (
     <ThemeProvider>
       <Provider store={store}>
-        <Router />
+      <PersistGate loading={null} persistor={persistor}>
+          <Router />
+      </PersistGate>
       </Provider>
     </ThemeProvider>
   );

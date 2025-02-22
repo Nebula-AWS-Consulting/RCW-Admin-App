@@ -12,7 +12,8 @@ interface SignInPayload {
 }
 
 interface SignUpPayload {
-  username: string;
+  firstName: string;
+  lastName: string;
   password: string;
   email: string;
 }
@@ -43,12 +44,16 @@ export const signIn = createAsyncThunk<
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
     });
+    const json = await response.json();
     if (!response.ok) {
-      const errorData = await response.json();
-      return rejectWithValue({ error: errorData.error || 'Sign in failed' });
+      return rejectWithValue({ error: json.error || 'Sign in failed' });
     }
-    const data: AuthenticationResult = await response.json();
-    return data;
+    // If the tokens are nested inside AuthenticationResult, adjust here:
+    if (json.AuthenticationResult) {
+      return json.AuthenticationResult;
+    }
+    // Otherwise, assume the tokens are at the top level:
+    return json;
   } catch (error: any) {
     return rejectWithValue({ error: error.message || 'Sign in failed' });
   }
@@ -59,12 +64,12 @@ export const signUp = createAsyncThunk<
   any,
   SignUpPayload,
   { rejectValue: { error: string } }
->('auth/signUp', async ({ username, password, email }, { rejectWithValue }) => {
+>('auth/signUp', async ({ firstName, lastName, password, email }, { rejectWithValue }) => {
   try {
     const response = await fetch('https://cto3b5zoi7.execute-api.us-west-1.amazonaws.com/Prod/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password, email }),
+      body: JSON.stringify({ firstName, lastName, password, email }),
     });
     if (!response.ok) {
       const errorData = await response.json();

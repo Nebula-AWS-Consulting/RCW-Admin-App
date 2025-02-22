@@ -26,15 +26,15 @@ export function SignInView() {
 
   // Local state for our form fields and password visibility
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('hello@gmail.com');
-  const [password, setPassword] = useState('@demo1234');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   // Dispatch our signIn async thunk on form submit
   const handleSignIn = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const resultAction = await dispatch(signIn({ username: email, password }));
-      // If the sign in is successful, redirect the user
+
       if (signIn.fulfilled.match(resultAction)) {
         router.push('/');
       }
@@ -109,7 +109,7 @@ export function SignInView() {
         <Typography variant="h5">Sign in</Typography>
         <Typography variant="body2" color="text.secondary">
           Don’t have an account?
-          <Link href="/sign-up" variant="subtitle2" sx={{ ml: 0.5 }}>
+          <Link href="/auth/sign-up" variant="subtitle2" sx={{ ml: 0.5 }}>
             Get started
           </Link>
         </Typography>

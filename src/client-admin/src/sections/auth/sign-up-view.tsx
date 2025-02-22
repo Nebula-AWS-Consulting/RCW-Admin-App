@@ -12,22 +12,29 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 
 import { Iconify } from 'src/components/iconify';
+import { useRouter } from 'src/routes/hooks';
 
 export function SignUpView() {
   const dispatch: AppDispatch = useDispatch();
   const { loading, error } = useSelector((state: RootState) => state.auth);
+  const router = useRouter();
 
-  const [username, setUsername] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = useCallback(
-    async (e: FormEvent<HTMLFormElement>) => {
+    async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      dispatch(signUp({ username, password, email }));
+      const resultAction = await dispatch(signUp({ firstName: firstName, lastName: lastName, email: email, password }));
+
+      if (signUp.fulfilled.match(resultAction)) {
+        router.push('/');
+      }
     },
-    [dispatch, username, password, email]
+    [dispatch, firstName, lastName, password, email]
   );
 
   return (
@@ -36,7 +43,7 @@ export function SignUpView() {
         <Typography variant="h5">Sign Up</Typography>
         <Typography variant="body2" color="text.secondary">
           Already have an account?
-          <Link href="/sign-in" variant="subtitle2" sx={{ ml: 0.5 }}>
+          <Link href="/auth/sign-in" variant="subtitle2" sx={{ ml: 0.5 }}>
             Sign in
           </Link>
         </Typography>
@@ -51,10 +58,19 @@ export function SignUpView() {
       >
         <TextField
           fullWidth
-          name="username"
-          label="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          name="firstName"
+          label="First Name"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          InputLabelProps={{ shrink: true }}
+          sx={{ mb: 3 }}
+        />
+        <TextField
+          fullWidth
+          name="lastName"
+          label="Last Name"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
           InputLabelProps={{ shrink: true }}
           sx={{ mb: 3 }}
         />
