@@ -1,7 +1,5 @@
-import React, { useState, FormEvent, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { signUp } from '../../ducks/authSlice';
-import { RootState, AppDispatch } from '../../store';
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -13,6 +11,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 import { Iconify } from 'src/components/iconify';
 import { useRouter } from 'src/routes/hooks';
+import { RootState, AppDispatch } from '../../store';
+import { signUp } from '../../ducks/authSlice';
 
 export function SignUpView() {
   const dispatch: AppDispatch = useDispatch();
@@ -28,13 +28,13 @@ export function SignUpView() {
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      const resultAction = await dispatch(signUp({ firstName: firstName, lastName: lastName, email: email, password }));
+      const resultAction = await dispatch(signUp({ firstName, lastName, email, password }));
 
       if (signUp.fulfilled.match(resultAction)) {
         router.push('/');
       }
     },
-    [dispatch, firstName, lastName, password, email]
+    [dispatch, firstName, lastName, password, email, router]
   );
 
   return (

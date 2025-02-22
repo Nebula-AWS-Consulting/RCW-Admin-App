@@ -1,7 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from 'src/store';
-import { signIn } from '../../ducks/authSlice';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -14,6 +13,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 import { useRouter } from 'src/routes/hooks';
 import { Iconify } from 'src/components/iconify';
+import { signIn } from '../../ducks/authSlice';
 
 // ----------------------------------------------------------------------
 
