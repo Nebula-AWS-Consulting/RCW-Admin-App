@@ -7,7 +7,8 @@ import {
   PAUSE,
   PERSIST,
   PURGE,
-  REGISTER, } from 'redux-persist';
+  REGISTER
+} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import authReducer from './ducks/authSlice';
 
@@ -29,6 +30,10 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
+});
+
+store.subscribe(() => {
+  console.log('Store state:', store.getState());
 });
 
 export const persistor = persistStore(store);
