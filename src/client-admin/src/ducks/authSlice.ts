@@ -99,8 +99,8 @@ const authSlice = createSlice({
       })
       .addCase(signIn.fulfilled, (state, action: PayloadAction<AuthenticationResult>) => {
         state.loading = false;
-        state.token = action.payload.IdToken; // adjust as needed
-        state.user = action.payload; // or extract specific user details
+        state.token = action.payload.IdToken;
+        state.user = action.payload;
       })
       .addCase(signIn.rejected, (state, action) => {
         state.loading = false;
