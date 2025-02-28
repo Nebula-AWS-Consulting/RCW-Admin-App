@@ -39,7 +39,7 @@ export const signIn = createAsyncThunk<
   { rejectValue: { error: string } }
 >('auth/signIn', async ({ username, password }, { rejectWithValue }) => {
   try {
-    const response = await fetch('https://cto3b5zoi7.execute-api.us-west-1.amazonaws.com/Prod/signin', {
+    const response = await fetch('https://92vq2x6u1b.execute-api.us-west-1.amazonaws.com/Prod/signin', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
@@ -52,7 +52,6 @@ export const signIn = createAsyncThunk<
     if (json.AuthenticationResult) {
       return json.AuthenticationResult;
     }
-    // Otherwise, assume the tokens are at the top level:
     return json;
   } catch (error: any) {
     return rejectWithValue({ error: error.message || 'Sign in failed' });
@@ -66,7 +65,7 @@ export const signUp = createAsyncThunk<
   { rejectValue: { error: string } }
 >('auth/signUp', async ({ firstName, lastName, password, email }, { rejectWithValue }) => {
   try {
-    const response = await fetch('https://cto3b5zoi7.execute-api.us-west-1.amazonaws.com/Prod/signup', {
+    const response = await fetch('https://92vq2x6u1b.execute-api.us-west-1.amazonaws.com/Prod/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ firstName, lastName, password, email }),
