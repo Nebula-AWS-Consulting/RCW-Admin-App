@@ -32,10 +32,6 @@ export const store = configureStore({
     }),
 });
 
-store.subscribe(() => {
-  console.log('Store state:', store.getState());
-});
-
 export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
