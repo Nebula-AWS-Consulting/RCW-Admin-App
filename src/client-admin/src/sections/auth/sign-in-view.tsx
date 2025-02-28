@@ -1,4 +1,6 @@
 import { useState, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from 'src/store';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -10,27 +12,50 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
 
 import { useRouter } from 'src/routes/hooks';
-
 import { Iconify } from 'src/components/iconify';
+import { signIn } from '../../ducks/authSlice';
 
 // ----------------------------------------------------------------------
 
 export function SignInView() {
   const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
 
+  // Get loading and error state from our auth slice
+  const { loading, error } = useSelector((state: RootState) => state.auth);
+
+  // Local state for our form fields and password visibility
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleSignIn = useCallback(() => {
-    router.push('/');
-  }, [router]);
+  // Dispatch our signIn async thunk on form submit
+  const handleSignIn = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const resultAction = await dispatch(signIn({ username: email, password }));
+
+      if (signIn.fulfilled.match(resultAction)) {
+        router.push('/');
+      }
+    },
+    [dispatch, email, password, router]
+  );
 
   const renderForm = (
-    <Box display="flex" flexDirection="column" alignItems="flex-end">
+    <Box
+      component="form"
+      onSubmit={handleSignIn}
+      display="flex"
+      flexDirection="column"
+      alignItems="flex-end"
+    >
       <TextField
         fullWidth
         name="email"
         label="Email address"
-        defaultValue="hello@gmail.com"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
         InputLabelProps={{ shrink: true }}
         sx={{ mb: 3 }}
       />
@@ -43,7 +68,8 @@ export function SignInView() {
         fullWidth
         name="password"
         label="Password"
-        defaultValue="@demo1234"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
         InputLabelProps={{ shrink: true }}
         type={showPassword ? 'text' : 'password'}
         InputProps={{
@@ -64,10 +90,16 @@ export function SignInView() {
         type="submit"
         color="inherit"
         variant="contained"
-        onClick={handleSignIn}
+        loading={loading}
       >
         Sign in
       </LoadingButton>
+
+      {error && (
+        <Typography variant="body2" color="error" sx={{ mt: 2 }}>
+          {error}
+        </Typography>
+      )}
     </Box>
   );
 
@@ -77,7 +109,7 @@ export function SignInView() {
         <Typography variant="h5">Sign in</Typography>
         <Typography variant="body2" color="text.secondary">
           Don’t have an account?
-          <Link variant="subtitle2" sx={{ ml: 0.5 }}>
+          <Link href="/auth/sign-up" variant="subtitle2" sx={{ ml: 0.5 }}>
             Get started
           </Link>
         </Typography>

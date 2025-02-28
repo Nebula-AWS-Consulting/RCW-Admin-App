@@ -7,6 +7,7 @@ import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgr
 import { varAlpha } from 'src/theme/styles';
 import { AuthLayout } from 'src/layouts/auth';
 import { DashboardLayout } from 'src/layouts/dashboard';
+import { RequireAuth } from 'src/components/auth/RequireAuth';
 
 // ----------------------------------------------------------------------
 
@@ -14,6 +15,7 @@ export const HomePage = lazy(() => import('src/pages/home'));
 export const BlogPage = lazy(() => import('src/pages/blog'));
 export const UserPage = lazy(() => import('src/pages/user'));
 export const SignInPage = lazy(() => import('src/pages/sign-in'));
+export const SignUpPage = lazy(() => import('src/pages/sign-up'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
 // ----------------------------------------------------------------------
@@ -35,11 +37,13 @@ export function Router() {
   return useRoutes([
     {
       element: (
-        <DashboardLayout>
-          <Suspense fallback={renderFallback}>
-            <Outlet />
-          </Suspense>
+        <RequireAuth>
+          <DashboardLayout>
+            <Suspense fallback={renderFallback}>
+              <Outlet />
+            </Suspense>
         </DashboardLayout>
+        </RequireAuth>
       ),
       children: [
         { element: <HomePage />, index: true },
@@ -48,10 +52,18 @@ export function Router() {
       ],
     },
     {
-      path: 'sign-in',
+      path: 'auth/sign-in',
       element: (
         <AuthLayout>
           <SignInPage />
+        </AuthLayout>
+      ),
+    },
+    {
+      path: 'auth/sign-up',
+      element: (
+        <AuthLayout>
+          <SignUpPage />
         </AuthLayout>
       ),
     },
