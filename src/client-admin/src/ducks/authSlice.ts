@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { REHYDRATE } from 'redux-persist';
 
 interface AuthenticationResult {
   IdToken: string;
@@ -20,9 +21,10 @@ interface SignUpPayload {
 
 interface AuthState {
   token: string | null;
-  user: any; // Customize this type based on your needs
+  user: any;
   loading: boolean;
   error: string | null;
+  isLoggedIn: boolean;
 }
 
 const initialState: AuthState = {
@@ -30,6 +32,7 @@ const initialState: AuthState = {
   user: null,
   loading: false,
   error: null,
+  isLoggedIn: false
 };
 
 // Async thunk for sign in using fetch
@@ -45,6 +48,7 @@ export const signIn = createAsyncThunk<
       body: JSON.stringify({ username, password }),
     });
     const json = await response.json();
+    console.log('Raw signIn response:', json);
     if (!response.ok) {
       return rejectWithValue({ error: json.error || 'Sign in failed' });
     }
@@ -88,6 +92,7 @@ const authSlice = createSlice({
     signOut(state) {
       state.token = null;
       state.user = null;
+      state.isLoggedIn = false;
     },
   },
   extraReducers: (builder) => {
@@ -101,6 +106,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.token = action.payload.IdToken;
         state.user = action.payload;
+        state.isLoggedIn = true
       })
       .addCase(signIn.rejected, (state, action) => {
         state.loading = false;
@@ -114,13 +120,17 @@ const authSlice = createSlice({
       })
       .addCase(signUp.fulfilled, (state, action: PayloadAction<any>) => {
         state.loading = false;
-        // Optionally, auto sign in the user after sign up or provide further instructions.
       })
       .addCase(signUp.rejected, (state, action) => {
         state.loading = false;
         state.error =
           action.payload?.error || action.error.message || 'Sign up failed';
-      });
+      })
+      .addCase(REHYDRATE, (state) => {
+        if (state.user) {
+          state.isLoggedIn = true
+        }
+      })
   },
 });
 
