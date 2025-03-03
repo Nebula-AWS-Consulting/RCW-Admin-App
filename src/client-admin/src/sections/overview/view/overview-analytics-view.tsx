@@ -4,6 +4,9 @@ import Typography from '@mui/material/Typography';
 import { _tasks, _posts, _timeline } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
 
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store';
+
 import { AnalyticsNews } from '../analytics-news';
 import { AnalyticsTasks } from '../analytics-tasks';
 import { AnalyticsCurrentVisits } from '../analytics-current-visits';
@@ -18,10 +21,12 @@ import { AnalyticsTransactionForm } from '../analytics-transaction-form';
 // ----------------------------------------------------------------------
 
 export function OverviewAnalyticsView() {
+  const user = useSelector((state: RootState) => state.auth.user);
+
   return (
     <DashboardContent maxWidth="xl">
       <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
-        Hi, Welcome back 👋
+        Hi {user["custom:firstName"]}, welcome back 👋
       </Typography>
 
       <Grid container spacing={3}>
