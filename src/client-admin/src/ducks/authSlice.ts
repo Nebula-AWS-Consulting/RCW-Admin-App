@@ -63,7 +63,7 @@ export const signIn = createAsyncThunk<
 
     // Now call the get user API with the AccessToken
     const userResponse = await fetch(
-      `${import.meta.env.VITE_API_LINK}getuser`, // Change to getuser later
+      `${import.meta.env.VITE_API_LINK}getuser`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
