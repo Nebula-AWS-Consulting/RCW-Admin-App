@@ -25,8 +25,14 @@ export function OverviewAnalyticsView() {
 
   return (
     <DashboardContent maxWidth="xl">
-      <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
+      <Typography variant="h4" sx={{ mb: { xs: 2, md: 4 } }}>
         Hi {user["custom:firstName"]}, welcome back 👋
+      </Typography>
+      <Typography variant="h4" sx={{ mb: { xs: 1, md: 1 } }}>
+        Work in Progress...
+      </Typography>
+      <Typography variant="h5" sx={{ mb: { xs: 3, md: 5 } }}>
+        The Church Transaction Form for Works however!!
       </Typography>
 
       <Grid container spacing={3}>
