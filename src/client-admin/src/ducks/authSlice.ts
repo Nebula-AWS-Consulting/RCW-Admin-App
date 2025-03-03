@@ -63,7 +63,7 @@ export const signIn = createAsyncThunk<
 
     // Now call the get user API with the AccessToken
     const userResponse = await fetch(
-      'https://92vq2x6u1b.execute-api.us-west-1.amazonaws.com/Prod/upload-cash-transaction', // Change to getuser later
+      'https://92vq2x6u1b.execute-api.us-west-1.amazonaws.com/Prod/getuser', // Change to getuser later
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

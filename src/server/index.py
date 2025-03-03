@@ -49,7 +49,9 @@ def lambda_handler(event, context):
         elif path == "/signin":
             return sign_in(event)
         elif path == "/upload-cash-transaction":
-            return get_user(event) ## Change back in the future
+            return upload_cash_transaction(event)
+        elif path == "/getuser":
+            return get_user(event)
     elif http_method == "GET":
         if path == "/get-db-items":
             return get_db_items(event)
