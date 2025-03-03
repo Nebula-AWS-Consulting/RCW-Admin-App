@@ -15,6 +15,9 @@ import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 import { useRouter, usePathname } from 'src/routes/hooks';
 
 import { _myAccount } from 'src/_mock';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from 'src/store';
+import { signOut } from '../../ducks/authSlice';
 
 // ----------------------------------------------------------------------
 
@@ -33,6 +36,17 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
   const pathname = usePathname();
 
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleLogOut = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      dispatch(signOut());
+      router.push('/auth/sign-in');
+    },
+    [dispatch, router]
+  );
 
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setOpenPopover(event.currentTarget);
@@ -128,7 +142,7 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <Box sx={{ p: 1 }}>
+        <Box sx={{ p: 1 }} onClick={handleLogOut}>
           <Button fullWidth color="error" size="medium" variant="text">
             Logout
           </Button>

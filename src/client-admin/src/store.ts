@@ -1,42 +1,30 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { 
-  persistReducer, 
-  persistStore, 
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER
-} from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 import authReducer from './ducks/authSlice';
+import { loadAuthState, saveAuthState } from './utils/localStorage';
 
-const persistConfig = {
-  key: 'root',
-  storage,
-  whitelist: ['auth']
+// Load persisted auth state from localStorage (if available)
+const preloadedState = {
+  auth: loadAuthState() || {
+    token: null,
+    user: null,
+    loading: false,
+    error: null,
+    isLoggedIn: false,
+  },
 };
-
-const persistedReducer = persistReducer(persistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
-    auth: persistedReducer
+    auth: authReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
+  preloadedState,
 });
 
+// Subscribe to store updates to save the auth slice to localStorage
 store.subscribe(() => {
-  console.log('Store state:', store.getState());
+  const state = store.getState();
+  saveAuthState(state.auth);
 });
-
-export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
