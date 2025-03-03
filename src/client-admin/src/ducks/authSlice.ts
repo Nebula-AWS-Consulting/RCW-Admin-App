@@ -47,7 +47,7 @@ export const signIn = createAsyncThunk<
   try {
     // Call the sign-in API
     const response = await fetch(
-      'https://92vq2x6u1b.execute-api.us-west-1.amazonaws.com/Prod/signin',
+      `${import.meta.env.VITE_API_LINK}signin`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -63,7 +63,7 @@ export const signIn = createAsyncThunk<
 
     // Now call the get user API with the AccessToken
     const userResponse = await fetch(
-      'https://92vq2x6u1b.execute-api.us-west-1.amazonaws.com/Prod/getuser', // Change to getuser later
+      `${import.meta.env.VITE_API_LINK}getuser`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -82,7 +82,7 @@ export const signIn = createAsyncThunk<
   }
 });
 
-// Async thunk for sign up using fetch
+// Async thunk for sign up using fetch (unchanged)
 export const signUp = createAsyncThunk<
   any,
   SignUpPayload,
@@ -90,7 +90,7 @@ export const signUp = createAsyncThunk<
 >('auth/signUp', async ({ firstName, lastName, password, email }, { rejectWithValue }) => {
   try {
     const response = await fetch(
-      'https://92vq2x6u1b.execute-api.us-west-1.amazonaws.com/Prod/signup',
+      `${import.meta.env.VITE_API_LINK}signup`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
