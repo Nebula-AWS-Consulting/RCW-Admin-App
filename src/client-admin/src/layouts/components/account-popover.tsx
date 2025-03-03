@@ -40,7 +40,6 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.auth.user);
 
-
   const handleLogOut = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       e.preventDefault();

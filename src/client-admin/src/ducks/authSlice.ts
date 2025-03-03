@@ -82,7 +82,7 @@ export const signIn = createAsyncThunk<
   }
 });
 
-// Async thunk for sign up using fetch (unchanged)
+// Async thunk for sign up using fetch
 export const signUp = createAsyncThunk<
   any,
   SignUpPayload,
