@@ -50,6 +50,8 @@ def lambda_handler(event, context):
             return sign_in(event)
         elif path == "/upload-cash-transaction":
             return upload_cash_transaction(event)
+        elif path == "/getuser":
+            return get_user(event)
     elif http_method == "GET":
         if path == "/get-db-items":
             return get_db_items(event)
@@ -148,6 +150,49 @@ def sign_in(event):
             "body": json.dumps({"error": str(e)})
         }
 
+def get_user(event):
+    """
+    Get details of a user from Cognito and return their attributes.
+    Expects JSON in the request body with key:
+      - accessToken (or AccessToken)
+    Returns a dictionary of user attributes for display on the front end.
+    """
+    try:
+        body = json.loads(event['body'])
+        access_token = body.get('accessToken') or body.get('AccessToken')
+        if not access_token:
+            raise Exception("Access token not provided")
+        
+        # Call Cognito's get_user API using the provided access token
+        response = cognito_client.get_user(
+            AccessToken=access_token
+        )
+        
+        # Extract the list of user attributes from the response
+        user_attributes = response.get('UserAttributes', [])
+        
+        # Convert the list of attributes into a dictionary for easier consumption
+        attributes_dict = {attr['Name']: attr['Value'] for attr in user_attributes}
+        
+        return {
+            "statusCode": 200,
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",  # or specify your origin
+                "Access-Control-Allow-Credentials": "true"
+            },
+            "body": json.dumps(attributes_dict)
+        }
+    except Exception as e:
+        logger.error("Error during get user: %s", str(e))
+        return {
+            "statusCode": 400,
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            },
+            "body": json.dumps({"error": str(e)})
+        }
 
 def upload_cash_transaction(event):
     """

@@ -12,12 +12,21 @@ export const RequireAuth: React.FC<RequireAuthProps> = ({ children }) => {
   const auth = useSelector((state: RootState) => state.auth);
   const location = useLocation();
 
-  // Check if the user is logged in (e.g., if token exists)
-  if (!auth.token) {
-    // Redirect them to the sign-in page and preserve the current location
-    return <Navigate to="/auth/sign-in" state={{ from: location }} replace />;
+  if (auth.token) {
+    return children;
   }
 
-  // User is authenticated, render the child components
-  return children;
+  const persistedAuthStr = localStorage.getItem('authState');
+  if (persistedAuthStr) {
+    try {
+      const persistedAuth = JSON.parse(persistedAuthStr);
+      if (persistedAuth && persistedAuth.token) {
+        return children;
+      }
+    } catch (e) {
+      console.error('Failed to parse persisted auth state:', e);
+    }
+  }
+
+  return <Navigate to="/auth/sign-in" state={{ from: location }} replace />;
 };

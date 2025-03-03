@@ -4,6 +4,9 @@ import Typography from '@mui/material/Typography';
 import { _tasks, _posts, _timeline } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
 
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store';
+
 import { AnalyticsNews } from '../analytics-news';
 import { AnalyticsTasks } from '../analytics-tasks';
 import { AnalyticsCurrentVisits } from '../analytics-current-visits';
@@ -18,10 +21,18 @@ import { AnalyticsTransactionForm } from '../analytics-transaction-form';
 // ----------------------------------------------------------------------
 
 export function OverviewAnalyticsView() {
+  const user = useSelector((state: RootState) => state.auth.user);
+
   return (
     <DashboardContent maxWidth="xl">
-      <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
-        Hi, Welcome back 👋
+      <Typography variant="h4" sx={{ mb: { xs: 2, md: 4 } }}>
+        Hi {user["custom:firstName"]}, welcome back 👋
+      </Typography>
+      <Typography variant="h4" sx={{ mb: { xs: 1, md: 1 } }}>
+        Work in Progress...
+      </Typography>
+      <Typography variant="h5" sx={{ mb: { xs: 3, md: 5 } }}>
+        The Church Transaction Form for Works however!!
       </Typography>
 
       <Grid container spacing={3}>
