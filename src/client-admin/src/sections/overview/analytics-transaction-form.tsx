@@ -53,7 +53,7 @@ export function AnalyticsTransactionForm() {
     };
     
     try {
-      const response = await fetch('https://cto3b5zoi7.execute-api.us-west-1.amazonaws.com/Prod/upload-item', {
+      const response = await fetch(`${import.meta.env.VITE_API_LINK}upload-item`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
